@@ -31,7 +31,10 @@ jobs:
       
       - name: Changing to terraform directory
         run: cd vpc-tf
-        
+
+      - name: demo
+        run: pwd
+
       - name: Initialize Terraform
         run: terraform init
 
