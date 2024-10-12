@@ -1,4 +1,4 @@
-name: Terraform VPC Deployment
+name: Terraform VPC Destroy
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v2 s
         with:
           terraform_version: 1.6.0  
 
