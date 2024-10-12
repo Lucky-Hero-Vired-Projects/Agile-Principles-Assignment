@@ -28,22 +28,20 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
-      
-      - name: Changing to terraform directory
-        run: cd vpc-tf
-
-      - name: demo
-        run: pwd
 
       - name: Initialize Terraform
+        working-directory: vpc-tf
         run: terraform init
 
       - name: Validate Terraform
+        working-directory: vpc-tf
         run: terraform validate
 
       - name: Plan Terraform
+        working-directory: vpc-tf
         run: terraform plan -out=tfplan
 
       - name: Apply Terraform (with confirmation)
         if: github.ref == 'refs/heads/main'  
+        working-directory: vpc-tf
         run: terraform apply tfplan
