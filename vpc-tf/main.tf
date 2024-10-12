@@ -1,6 +1,7 @@
 provider "aws" {
   region = var.aws_region
-  profile = "lucky143225"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 terraform {
@@ -8,7 +9,6 @@ terraform {
     bucket = "backup-config-terraform-tfstate-lucky1225"
     key    = "vpc/terraform.tfstate"
     region = "ap-south-1"
-    profile = "lucky143225"
   }
 }
 

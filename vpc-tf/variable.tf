@@ -3,6 +3,18 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
+variable "aws_access_key" {
+  description = "AWS Access Key"
+  type        = string
+  default     = "" 
+}
+
+variable "aws_secret_key" {
+  description = "AWS Secret Key"
+  type        = string
+  default     = "" 
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   default     = "10.0.0.0/16"
@@ -27,3 +39,4 @@ variable "private_az" {
   description = "Availability Zone for the private subnet"
   default     = "us-west-2b"
 }
+
