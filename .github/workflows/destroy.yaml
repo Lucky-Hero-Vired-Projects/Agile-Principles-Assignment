@@ -1,17 +1,13 @@
 name: Terraform VPC Deployment
 
 on:
-  push:
-    branches:
-      - main  
+  workflow_dispatch: 
 
 jobs:
-  terraform:
+  
+  terraform_destroy:
     runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
+    needs: terraform  
 
     steps:
       - name: Checkout Repository
@@ -36,24 +32,17 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init
 
-      - name: Validate Terraform
+      - name: Plan Terraform Destroy
         working-directory: vpc-tf
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform validate
+        run: terraform plan -destroy -out=tfplan_destroy
 
-      - name: Plan Terraform
-        working-directory: vpc-tf
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform plan -out=tfplan
-
-      - name: Apply Terraform (with confirmation)
+      - name: Apply Terraform Destroy
         if: github.ref == 'refs/heads/main'  
         working-directory: vpc-tf
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform apply tfplan
+        run: terraform apply tfplan_destroy     
